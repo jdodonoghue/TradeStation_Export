@@ -1,0 +1,29 @@
+If BarType = 1 then
+Begin
+  interval = "Minute"; 
+end;
+
+If BarType = 2 then
+Begin
+  interval = "Daily"; 
+end;
+
+If BarType = 3 then
+Begin
+  interval = "Weekly";
+end;
+
+If BarNumber = 1 then
+begin
+	CLEARPRINTLOG;
+	FileDelete(filePath + symbol + "_" + interval + ".csv");
+end;
+
+// needed because indicator
+Plot1(0);
+	
+If Date >= 1000101 and Date < CurrentDate then
+Begin 
+	FileAppend(filePath + symbol + "_" + interval + ".csv", symbol + "," +  ELDateToString(Date) + "," + NumToStr(open, 2) + "," + NUmToStr(high, 2) + "," 
+	+ NUmToStr(low, 2) + "," + NumToStr(close, 2) + Newline);
+End;   
