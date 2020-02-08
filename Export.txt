@@ -1,0 +1,178 @@
+
+
+using elsystem;
+using elsystem.windows.forms;
+using elsystem.drawing;
+using elsystem.collections;
+using elsystem.io;
+using platform;
+using tsdata.common; 
+using tsdata.marketdata;
+
+vars: elsystem.windows.forms.Form mainForm(Null),
+	  elsystem.windows.forms.TextBox txtFile( Null ),
+	  elsystem.windows.forms.SaveFileDialog dlgExportFile( Null ),
+	  elsystem.windows.forms.Button btnExport( Null );
+
+var: Vector myVectorObj(null);
+var: PriceSeriesProvider pcp1(null);
+var: Timer Timer1( NULL );
+vars: string symbolListFilePath(""), outputFilePath("");
+vars: int firstDate(0), int lastDate(0), interval(""); 
+var: intrabarpersist int icnt(0);
+
+method void AnalysisTechnique_Initialized( elsystem.Object sender, elsystem.InitializedEventArgs args ) 
+Begin 
+	Cleardebug();
+	mainForm = Form.Create("TradingAppJSForm", 100, 100); 
+	mainForm.Dock = DockStyle.right;
+	
+	
+	btnExport = elsystem.windows.forms.button.create("Export", 100, 25 );
+	btnExport.Location( 30,10 ); 
+	btnExport.BackColor = Color.LightGray;
+	btnExport.Click += btnExport_OnButtonClick; 
+	
+	mainForm.AddControl(btnExport);   
+	
+	mainForm.Show();
+	
+	Initialize();
+End;
+
+method void Initialize()
+begin 
+	symbolListFilePath = "C:\_code\temp\Symbols_1.txt";
+	outputFilePath = "C:\_code\tradestation\data\IndividualContractsWeekly\";
+	firstDate = 1150701;
+	lastDate = 1191231;
+	interval = "Weekly"; //"Daily" "Weekly"
+end;
+
+method void btnExport_OnButtonClick( elsystem.Object sender, elsystem.EventArgs args ) 
+var: int cnt, string line, StreamReader myFile;
+begin
+
+	myFile = StreamReader.Create(symbolListFilePath); 
+	
+	myVectorObj = new Vector();
+	
+	While (myFile.EndOfStream = False)
+	Begin
+		line = myFile.ReadLine();
+		DeleteFile(outputFilePath + line + "_" + "Weekly" + ".csv");
+		myVectorObj.Push_back(line);
+	End; 
+	
+	myFile.Close();
+	
+	//PrintFiles();
+	pcp1 = new PriceSeriesProvider();
+	SetupTimer();
+	Timer1.Start();
+	
+end; 
+
+method void PrintFiles()
+Begin
+	for icnt = 0 to myVectorObj.Count - 1
+	begin 
+		print(myVectorObj[icnt].ToString());
+	end;
+End;
+
+method void DeleteFile(string filepath)
+begin
+	FileDelete(filepath);
+end;
+
+method void Export( int icnt) 
+var: string symbolValue;
+begin 
+	//print("Export");
+	//print(icnt);
+	symbolValue = myVectorObj[icnt].ToString();
+	//print(symbolValue);
+	pcp1 = new PriceSeriesProvider(); 
+	pcp1.Symbol = symbolValue; 
+	if interval = "Weekly" Then
+	begin 
+		pcp1.Interval.IntervalType = DataIntervalType.Weekly; 
+	end;
+	if interval = "Daily" Then
+	begin 
+		pcp1.Interval.IntervalType = DataIntervalType.Daily; 
+	end;
+	pcp1.Range.Type = DataRangeType.Bars; 
+	pcp1.Range.FirstDate = DateTime.Create(firstDate); 
+	pcp1.Range.LastDate = DateTime.Create(lastDate); 
+	pcp1.Name = "PSP"; 
+	pcp1.StateChanged += pcp1_StateChanged; 
+	pcp1.LoadProvider();
+end;
+
+method void pcp1_StateChanged ( elsystem.Object sender, tsdata.common.StateChangedEventArgs args )
+Begin
+	
+	If args.NewState = DataState.loaded then
+	begin
+	//	print("loaded", pcp1.Symbol);
+		ProcessData(); 
+		pcp1.CloseProvider();
+	end;
+end;
+
+method void ProcessData() 
+var: int cnt;
+begin 
+	for cnt = pcp1.Count - 1 downto 0 
+	begin 
+		//Print(pcp1.Symbol, ",", pcp1.Data.Time[cnt].ToString(), ",", pcp1.Open[cnt], ",", pcp1.High[cnt], ",", pcp1.Low[cnt], ",", pcp1.Close[cnt]);
+		FileAppend(outputFilePath + pcp1.Symbol + "_" + "Weekly" + ".csv", pcp1.Symbol + "," +  pcp1.Data.Time[cnt].ToString() + "," + pcp1.Open[cnt].ToString() + "," + pcp1.High[cnt].ToString() + "," + pcp1.Low[cnt].ToString() + "," + pcp1.Close[cnt].ToString() + Newline);
+	end;  
+end; 
+
+method void pcp1_Updated ( elsystem.Object sender, tsdata.marketdata.PriceSeriesUpdatedEventArgs args )
+Begin
+  print("pcp1_Updated");
+end;
+
+method void SetupTimer()	
+Begin
+	//print("SetupTimer"); 
+	Timer1 = new elsystem.Timer;
+	Timer1.Interval = 100;
+	Timer1.AutoReset = true;
+	Timer1.Enable = false;
+	Timer1.Name = "Timer1";
+	Timer1.elapsed += Timer1_Elapsed;
+end;
+ 
+method void Timer1_Elapsed( Object sender, TimerElapsedEventArgs args ) 
+begin
+	//print("Timer1_Elapsed"); 
+	//print(icnt);
+	//print(myVectorObj[icnt].ToString());
+	if pcp1.State = DataState.Unloaded then
+	Begin
+		Export(icnt);
+		icnt += 1; 
+	end;
+	//print(icnt);
+	
+	If icnt = myVectorObj.Count Then
+	Begin
+		Timer1.Stop();
+		print("completed"); 
+	end;
+end;
+
+
+{
+doc = new elsystem.xml.xmldocument;
+try
+   doc.Load("C:\testing123.xml");
+catch (elsystem.io.filenotfoundexceptionex)
+   throw ex.create("User-defined: File is not in the specifieddirectory");
+end;
+}
