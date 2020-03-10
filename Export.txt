@@ -1,6 +1,5 @@
 
-
-using elsystem;
+using elsystem; 
 using elsystem.windows.forms;
 using elsystem.drawing;
 using elsystem.collections;
@@ -11,9 +10,9 @@ using tsdata.marketdata;
 
 vars: elsystem.windows.forms.Form mainForm(Null),
 	  elsystem.windows.forms.TextBox txtFile( Null ),
-	  elsystem.windows.forms.SaveFileDialog dlgExportFile( Null ),
-	  elsystem.windows.forms.Button btnExport( Null );
-
+	  elsystem.windows.forms.OpenFileDialog dlgSymbolsFile( Null ),
+	  elsystem.windows.forms.OpenFileDialog dlgExportFile( Null );
+	  
 var: Vector myVectorObj(null);
 var: PriceSeriesProvider pcp1(null);
 var: Timer Timer1( NULL );
@@ -24,43 +23,48 @@ var: intrabarpersist int icnt(0);
 method void AnalysisTechnique_Initialized( elsystem.Object sender, elsystem.InitializedEventArgs args ) 
 Begin 
 	Cleardebug();
-	mainForm = Form.Create("TradingAppJSForm", 100, 100); 
-	mainForm.Dock = DockStyle.right;
-	
-	
-	btnExport = elsystem.windows.forms.button.create("Export", 100, 25 );
-	btnExport.Location( 30,10 ); 
-	btnExport.BackColor = Color.LightGray;
-	btnExport.Click += btnExport_OnButtonClick; 
-	
-	mainForm.AddControl(btnExport);   
-	
-	mainForm.Show();
-	
+	frmExport.Dock = DockStyle.Fill;
+
 	Initialize();
+	frmExport.Show();
+
 End;
 
 method void Initialize()
 begin 
-	symbolListFilePath = "C:\_code\temp\Symbols_1.txt";
+	symbolListFilePath = "C:\_code\temp\Symbols_2.txt";
 	outputFilePath = "C:\_code\tradestation\data\IndividualContractsWeekly\";
-	firstDate = 1150701;
-	lastDate = 1191231;
-	interval = "Weekly"; //"Daily" "Weekly"
+	firstDate = 1180101;
+	lastDate = 1190101;
+	
+	cmbInterval.AddItem("Daily");
+	cmbInterval.AddItem("Weekly");
+	
+	//interval = "Daily"; //"Daily", 0, "Weekly", 1
+	cmbInterval.SelectedIndex = 0;
+	
+	dtpBeginDate.Value = DateTime.Create(1190101);
+	dtpEndDate.Value = DateTime.Now;
+	
+	txtSymbolsPath.Text = symbolListFilePath;
+	txtExportPath.Text = outputFilePath;
+	
 end;
 
-method void btnExport_OnButtonClick( elsystem.Object sender, elsystem.EventArgs args ) 
+method void btnExport_Click( elsystem.Object sender, elsystem.EventArgs args ) 
 var: int cnt, string line, StreamReader myFile;
 begin
-
+	//print("btnExport_OnButtonClick");
 	myFile = StreamReader.Create(symbolListFilePath); 
 	
 	myVectorObj = new Vector();
 	
+	interval = cmbInterval.SelectedItem.ToString();
+	
 	While (myFile.EndOfStream = False)
 	Begin
 		line = myFile.ReadLine();
-		DeleteFile(outputFilePath + line + "_" + "Weekly" + ".csv");
+		DeleteFile(outputFilePath + line + "_" + interval + ".csv");
 		myVectorObj.Push_back(line);
 	End; 
 	
@@ -71,7 +75,7 @@ begin
 	SetupTimer();
 	Timer1.Start();
 	
-end; 
+end;  
 
 method void PrintFiles()
 Begin
@@ -88,6 +92,7 @@ end;
 
 method void Export( int icnt) 
 var: string symbolValue;
+
 begin 
 	//print("Export");
 	//print(icnt);
@@ -95,6 +100,9 @@ begin
 	//print(symbolValue);
 	pcp1 = new PriceSeriesProvider(); 
 	pcp1.Symbol = symbolValue; 
+	
+	interval = cmbInterval.SelectedItem.ToString();
+	
 	if interval = "Weekly" Then
 	begin 
 		pcp1.Interval.IntervalType = DataIntervalType.Weekly; 
@@ -104,8 +112,10 @@ begin
 		pcp1.Interval.IntervalType = DataIntervalType.Daily; 
 	end;
 	pcp1.Range.Type = DataRangeType.Bars; 
-	pcp1.Range.FirstDate = DateTime.Create(firstDate); 
-	pcp1.Range.LastDate = DateTime.Create(lastDate); 
+	//pcp1.Range.FirstDate = DateTime.Create(firstDate); 
+	//pcp1.Range.LastDate = DateTime.Create(lastDate);
+	pcp1.Range.FirstDate = DateTime.Create(dtpBeginDate.Value.Year, dtpBeginDate.Value.Month, dtpBeginDate.Value.Day);;
+	pcp1.Range.LastDate = DateTime.Create(dtpEndDate.Value.Year, dtpEndDate.Value.Month, dtpEndDate.Value.Day);;
 	pcp1.Name = "PSP"; 
 	pcp1.StateChanged += pcp1_StateChanged; 
 	pcp1.LoadProvider();
@@ -176,3 +186,59 @@ catch (elsystem.io.filenotfoundexceptionex)
    throw ex.create("User-defined: File is not in the specifieddirectory");
 end;
 }
+
+method void cmbInterval_Click( elsystem.Object sender, elsystem.EventArgs args ) 
+begin
+
+end;
+
+
+
+method void btnSymbols_Click( elsystem.Object sender, elsystem.EventArgs args ) 
+begin
+	dlgSymbolsFile.Show();
+end;
+
+method void dlgSymbolsFile_OnFileOkClick( elsystem.Object sender, elsystem.EventArgs args ) 
+Begin
+	Print(dlgSymbolsFile.SafeFileName);
+	txtSymbolsPath.Text = dlgSymbolsFile.SafeFileName;
+end;
+
+method void btnExportPath_Click( elsystem.Object sender, elsystem.EventArgs args ) 
+begin
+	dlgExportFile.Show();
+end;
+
+method void dlgExportFile_OnFileOkClick( elsystem.Object sender, elsystem.EventArgs args ) 
+Begin
+	Print(dlgExportFile.FileName);
+	Print(dlgExportFile.SafeFileName);
+	txtExportPath.Text = dlgExportFile.FileName;
+end;
+
+method void btnShowSymbolsPathDialog_Click( elsystem.Object sender, elsystem.EventArgs args ) 
+begin
+	Print("btnShowSymbolsPathDialog_Click");
+	dlgSymbolsFile = OpenFileDialog.Create();
+	dlgSymbolsFile.InitialDirectory = "C:\_code\temp\";
+	dlgSymbolsFile.Filter = "txt files (*.txt)|*.txt";
+	dlgSymbolsFile.FileOk += dlgSymbolsFile_OnFileOkClick;
+	//dlgSymbolsFile.
+	//string dir = System.IO.Path.GetDirectoryName(dlgSymbolsFile.FileName); 
+	dlgSymbolsFile.Show();
+end;
+
+method void btnShowExportPathDialog_Click( elsystem.Object sender, elsystem.EventArgs args ) 
+begin
+	Print("btnShowExportPathDialog_Click");
+	dlgExportFile = OpenFileDialog.Create();
+	dlgExportFile.InitialDirectory = "C:\_code\tradestation\data\";
+	dlgExportFile.ValidateNames = false;
+	dlgExportFile.CheckFileExists = false;
+	dlgExportFile.CheckPathExists = true;
+	dlgExportFile.Filter = "txt files (*.txt)|*.txt";
+	dlgExportFile.FileOk += dlgExportFile_OnFileOkClick;
+	dlgExportFile.Show();
+end;
+
