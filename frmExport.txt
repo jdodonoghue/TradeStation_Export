@@ -1,0 +1,469 @@
+var: elsystem.windows.forms.Form frmExport(NULL), elsystem.windows.forms.Button btnShowExportPathDialog(NULL), elsystem.windows.forms.Button btnShowSymbolsPathDialog(NULL), elsystem.windows.forms.Button btnExport(NULL), elsystem.windows.forms.Label lblEndDate(NULL), elsystem.windows.forms.Label lblBeginDate(NULL), elsystem.windows.forms.Label lblInterval(NULL), elsystem.windows.forms.DateTimePicker dtpEndDate(NULL), elsystem.windows.forms.DateTimePicker dtpBeginDate(NULL), elsystem.windows.forms.Label lblExportPath(NULL), elsystem.windows.forms.Label lblSymbolsPath(NULL), elsystem.windows.forms.TextBox txtExportPath(NULL), elsystem.windows.forms.TextBox txtSymbolsPath(NULL), elsystem.windows.forms.ComboBox cmbInterval(NULL);
+
+
+	{ This method gets called by EasyLanguage one time 
+	  at the beginning to create and initialize the components }
+
+method override void InitializeComponent()
+begin
+		frmExport = new elsystem.windows.forms.Form();
+		btnShowExportPathDialog = new elsystem.windows.forms.Button();
+		btnShowSymbolsPathDialog = new elsystem.windows.forms.Button();
+		btnExport = new elsystem.windows.forms.Button();
+		lblEndDate = new elsystem.windows.forms.Label();
+		lblBeginDate = new elsystem.windows.forms.Label();
+		lblInterval = new elsystem.windows.forms.Label();
+		dtpEndDate = new elsystem.windows.forms.DateTimePicker();
+		dtpBeginDate = new elsystem.windows.forms.DateTimePicker();
+		lblExportPath = new elsystem.windows.forms.Label();
+		lblSymbolsPath = new elsystem.windows.forms.Label();
+		txtExportPath = new elsystem.windows.forms.TextBox();
+		txtSymbolsPath = new elsystem.windows.forms.TextBox();
+		cmbInterval = new elsystem.windows.forms.ComboBox();
+		
+		//---------------------------
+		//frmexport
+		//---------------------------
+		frmExport.ControlBox = true;
+		frmExport.RightToLeftLayout = false;
+		frmExport.ClientSize = new elsystem.drawing.Size( 538, 385 );
+		frmExport.FormBorderStyle = elsystem.windows.forms.FormBorderStyle.Sizable;
+		frmExport.MinimizeBox = true;
+		frmExport.MaximizeBox = true;
+		frmExport.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		frmExport.Text = "Export";
+		frmExport.Dock = elsystem.windows.forms.DockStyle.None;
+		frmExport.Enabled = true;
+		frmExport.BackColor = elsystem.drawing.SystemColors.Control;
+		frmExport.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		frmExport.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		frmExport.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 8.25, 0);
+		frmExport.ControlLocation.X = 15;
+		frmExport.ControlLocation.Y = 15;
+		frmExport.Controls.Add( btnShowExportPathDialog );
+		frmExport.Controls.Add( btnShowSymbolsPathDialog );
+		frmExport.Controls.Add( btnExport );
+		frmExport.Controls.Add( lblEndDate );
+		frmExport.Controls.Add( lblBeginDate );
+		frmExport.Controls.Add( lblInterval );
+		frmExport.Controls.Add( dtpEndDate );
+		frmExport.Controls.Add( dtpBeginDate );
+		frmExport.Controls.Add( lblExportPath );
+		frmExport.Controls.Add( lblSymbolsPath );
+		frmExport.Controls.Add( txtExportPath );
+		frmExport.Controls.Add( txtSymbolsPath );
+		frmExport.Controls.Add( cmbInterval );
+		frmExport.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		frmExport.AutoSize = false;
+		frmExport.UseWaitCursor = false;
+		frmExport.UseTheme = elsystem.windows.forms.UseThemeMode.None;
+		frmExport.Name = "frmExport";
+		
+		//---------------------------
+		//btnshowexportpathdialog
+		//---------------------------
+		btnShowExportPathDialog.DisabledBackColor = elsystem.drawing.Color.FromArgb(240, 240, 240);
+		btnShowExportPathDialog.DisabledForeColor = elsystem.drawing.Color.FromArgb(128, 128, 128);
+		btnShowExportPathDialog.OverrideDisabledColors = false;
+		btnShowExportPathDialog.FlatStyle = elsystem.windows.forms.FlatStyle.Standard;
+		btnShowExportPathDialog.FlatAppearance.BorderSize = 1;
+		btnShowExportPathDialog.TextAlign = elsystem.windows.forms.ContentAlignment.MiddleCenter;
+		btnShowExportPathDialog.ImageAlign = elsystem.windows.forms.ContentAlignment.MiddleCenter;
+		btnShowExportPathDialog.UseCompatibleTextRendering = true;
+		btnShowExportPathDialog.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		btnShowExportPathDialog.Text = "...";
+		btnShowExportPathDialog.Width = 36;
+		btnShowExportPathDialog.Height = 23;
+		btnShowExportPathDialog.Dock = elsystem.windows.forms.DockStyle.None;
+		btnShowExportPathDialog.Visible = false;
+		btnShowExportPathDialog.Enabled = true;
+		btnShowExportPathDialog.BackColor = elsystem.drawing.SystemColors.Control;
+		btnShowExportPathDialog.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		btnShowExportPathDialog.Margin = new elsystem.windows.forms.Padding( 3, 3, 3, 3 );
+		btnShowExportPathDialog.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		btnShowExportPathDialog.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 12.00, 1);
+		btnShowExportPathDialog.ControlLocation.X = 467;
+		btnShowExportPathDialog.ControlLocation.Y = 213;
+		btnShowExportPathDialog.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		btnShowExportPathDialog.AutoSize = false;
+		btnShowExportPathDialog.UseWaitCursor = false;
+		btnShowExportPathDialog.UseTheme = elsystem.windows.forms.UseThemeMode.Full;
+		btnShowExportPathDialog.TabStop = true;
+		btnShowExportPathDialog.TabIndex = 12;
+		btnShowExportPathDialog.Name = "btnShowExportPathDialog";
+		
+		//---------------------------
+		//btnshowsymbolspathdialog
+		//---------------------------
+		btnShowSymbolsPathDialog.DisabledBackColor = elsystem.drawing.Color.FromArgb(240, 240, 240);
+		btnShowSymbolsPathDialog.DisabledForeColor = elsystem.drawing.Color.FromArgb(128, 128, 128);
+		btnShowSymbolsPathDialog.OverrideDisabledColors = false;
+		btnShowSymbolsPathDialog.FlatStyle = elsystem.windows.forms.FlatStyle.Standard;
+		btnShowSymbolsPathDialog.FlatAppearance.BorderSize = 1;
+		btnShowSymbolsPathDialog.TextAlign = elsystem.windows.forms.ContentAlignment.MiddleCenter;
+		btnShowSymbolsPathDialog.ImageAlign = elsystem.windows.forms.ContentAlignment.MiddleCenter;
+		btnShowSymbolsPathDialog.UseCompatibleTextRendering = true;
+		btnShowSymbolsPathDialog.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		btnShowSymbolsPathDialog.Text = "...";
+		btnShowSymbolsPathDialog.Width = 36;
+		btnShowSymbolsPathDialog.Height = 23;
+		btnShowSymbolsPathDialog.Dock = elsystem.windows.forms.DockStyle.None;
+		btnShowSymbolsPathDialog.Visible = false;
+		btnShowSymbolsPathDialog.Enabled = true;
+		btnShowSymbolsPathDialog.BackColor = elsystem.drawing.SystemColors.Control;
+		btnShowSymbolsPathDialog.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		btnShowSymbolsPathDialog.Margin = new elsystem.windows.forms.Padding( 3, 3, 3, 3 );
+		btnShowSymbolsPathDialog.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		btnShowSymbolsPathDialog.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 12.00, 1);
+		btnShowSymbolsPathDialog.ControlLocation.X = 467;
+		btnShowSymbolsPathDialog.ControlLocation.Y = 167;
+		btnShowSymbolsPathDialog.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		btnShowSymbolsPathDialog.AutoSize = false;
+		btnShowSymbolsPathDialog.UseWaitCursor = false;
+		btnShowSymbolsPathDialog.UseTheme = elsystem.windows.forms.UseThemeMode.Full;
+		btnShowSymbolsPathDialog.TabStop = true;
+		btnShowSymbolsPathDialog.TabIndex = 11;
+		btnShowSymbolsPathDialog.Name = "btnShowSymbolsPathDialog";
+		
+		//---------------------------
+		//btnexport
+		//---------------------------
+		btnExport.DisabledBackColor = elsystem.drawing.Color.FromArgb(128, 128, 128);
+		btnExport.DisabledForeColor = elsystem.drawing.Color.FromArgb(128, 128, 128);
+		btnExport.OverrideDisabledColors = false;
+		btnExport.FlatStyle = elsystem.windows.forms.FlatStyle.Popup;
+		btnExport.FlatAppearance.BorderSize = 1;
+		btnExport.TextAlign = elsystem.windows.forms.ContentAlignment.MiddleCenter;
+		btnExport.ImageAlign = elsystem.windows.forms.ContentAlignment.MiddleCenter;
+		btnExport.UseCompatibleTextRendering = true;
+		btnExport.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		btnExport.Text = "Export";
+		btnExport.Width = 75;
+		btnExport.Height = 23;
+		btnExport.Dock = elsystem.windows.forms.DockStyle.None;
+		btnExport.Visible = true;
+		btnExport.Enabled = true;
+		btnExport.BackColor = elsystem.drawing.Color.LightGray;
+		btnExport.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		btnExport.Margin = new elsystem.windows.forms.Padding( 3, 3, 3, 3 );
+		btnExport.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		btnExport.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 12.00, 0);
+		btnExport.ControlLocation.X = 198;
+		btnExport.ControlLocation.Y = 263;
+		btnExport.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		btnExport.AutoSize = false;
+		btnExport.UseWaitCursor = false;
+		btnExport.UseTheme = elsystem.windows.forms.UseThemeMode.Full;
+		btnExport.TabStop = true;
+		btnExport.TabIndex = 10;
+		btnExport.Name = "btnExport";
+		
+		//---------------------------
+		//lblenddate
+		//---------------------------
+		lblEndDate.FlatStyle = elsystem.windows.forms.FlatStyle.Standard;
+		lblEndDate.TextAlign = elsystem.windows.forms.ContentAlignment.BottomRight;
+		lblEndDate.UseCompatibleTextRendering = true;
+		lblEndDate.AutoEllipsis = false;
+		lblEndDate.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		lblEndDate.Text = "EndDate :";
+		lblEndDate.Width = 100;
+		lblEndDate.Height = 23;
+		lblEndDate.Dock = elsystem.windows.forms.DockStyle.None;
+		lblEndDate.Visible = true;
+		lblEndDate.Enabled = true;
+		lblEndDate.BackColor = elsystem.drawing.SystemColors.Control;
+		lblEndDate.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		lblEndDate.Margin = new elsystem.windows.forms.Padding( 3, 0, 3, 0 );
+		lblEndDate.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		lblEndDate.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 8.25, 1);
+		lblEndDate.ControlLocation.X = 41;
+		lblEndDate.ControlLocation.Y = 125;
+		lblEndDate.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		lblEndDate.AutoSize = false;
+		lblEndDate.UseWaitCursor = false;
+		lblEndDate.UseTheme = elsystem.windows.forms.UseThemeMode.Full;
+		lblEndDate.TabStop = false;
+		lblEndDate.TabIndex = 9;
+		lblEndDate.Name = "lblEndDate";
+		
+		//---------------------------
+		//lblbegindate
+		//---------------------------
+		lblBeginDate.FlatStyle = elsystem.windows.forms.FlatStyle.Standard;
+		lblBeginDate.TextAlign = elsystem.windows.forms.ContentAlignment.BottomRight;
+		lblBeginDate.UseCompatibleTextRendering = true;
+		lblBeginDate.AutoEllipsis = false;
+		lblBeginDate.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		lblBeginDate.Text = "Begin Date :";
+		lblBeginDate.Width = 100;
+		lblBeginDate.Height = 23;
+		lblBeginDate.Dock = elsystem.windows.forms.DockStyle.None;
+		lblBeginDate.Visible = true;
+		lblBeginDate.Enabled = true;
+		lblBeginDate.BackColor = elsystem.drawing.SystemColors.Control;
+		lblBeginDate.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		lblBeginDate.Margin = new elsystem.windows.forms.Padding( 3, 0, 3, 0 );
+		lblBeginDate.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		lblBeginDate.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 8.25, 1);
+		lblBeginDate.ControlLocation.X = 41;
+		lblBeginDate.ControlLocation.Y = 81;
+		lblBeginDate.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		lblBeginDate.AutoSize = false;
+		lblBeginDate.UseWaitCursor = false;
+		lblBeginDate.UseTheme = elsystem.windows.forms.UseThemeMode.Full;
+		lblBeginDate.TabStop = false;
+		lblBeginDate.TabIndex = 8;
+		lblBeginDate.Name = "lblBeginDate";
+		
+		//---------------------------
+		//lblinterval
+		//---------------------------
+		lblInterval.FlatStyle = elsystem.windows.forms.FlatStyle.Standard;
+		lblInterval.TextAlign = elsystem.windows.forms.ContentAlignment.BottomRight;
+		lblInterval.UseCompatibleTextRendering = true;
+		lblInterval.AutoEllipsis = false;
+		lblInterval.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		lblInterval.Text = "Interval :";
+		lblInterval.Width = 100;
+		lblInterval.Height = 23;
+		lblInterval.Dock = elsystem.windows.forms.DockStyle.None;
+		lblInterval.Visible = true;
+		lblInterval.Enabled = true;
+		lblInterval.BackColor = elsystem.drawing.SystemColors.Control;
+		lblInterval.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		lblInterval.Margin = new elsystem.windows.forms.Padding( 3, 0, 3, 0 );
+		lblInterval.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		lblInterval.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 8.25, 1);
+		lblInterval.ControlLocation.X = 41;
+		lblInterval.ControlLocation.Y = 35;
+		lblInterval.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		lblInterval.AutoSize = false;
+		lblInterval.UseWaitCursor = false;
+		lblInterval.UseTheme = elsystem.windows.forms.UseThemeMode.Full;
+		lblInterval.TabStop = false;
+		lblInterval.TabIndex = 7;
+		lblInterval.Name = "lblInterval";
+		
+		//---------------------------
+		//dtpenddate
+		//---------------------------
+		dtpEndDate.Value = elsystem.DateTime.Parse("3/10/2020 1:58:38 PM");
+		dtpEndDate.Format = elsystem.windows.forms.DateTimePickerFormat.FormatLong;
+		dtpEndDate.MinDate = elsystem.DateTime.Parse("1/1/1753");
+		dtpEndDate.MaxDate = elsystem.DateTime.Parse("12/31/9998");
+		dtpEndDate.ShowUpDown = false;
+		dtpEndDate.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		dtpEndDate.Width = 200;
+		dtpEndDate.Height = 20;
+		dtpEndDate.Dock = elsystem.windows.forms.DockStyle.None;
+		dtpEndDate.Visible = true;
+		dtpEndDate.Enabled = true;
+		dtpEndDate.BackColor = elsystem.drawing.SystemColors.Control;
+		dtpEndDate.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		dtpEndDate.Margin = new elsystem.windows.forms.Padding( 3, 3, 3, 3 );
+		dtpEndDate.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		dtpEndDate.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 8.25, 0);
+		dtpEndDate.ControlLocation.X = 147;
+		dtpEndDate.ControlLocation.Y = 128;
+		dtpEndDate.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		dtpEndDate.AutoSize = false;
+		dtpEndDate.UseWaitCursor = false;
+		dtpEndDate.UseTheme = elsystem.windows.forms.UseThemeMode.Full;
+		dtpEndDate.TabStop = true;
+		dtpEndDate.TabIndex = 6;
+		dtpEndDate.Name = "dtpEndDate";
+		
+		//---------------------------
+		//dtpbegindate
+		//---------------------------
+		dtpBeginDate.Value = elsystem.DateTime.Parse("3/10/2020 3:15:22 PM");
+		dtpBeginDate.Format = elsystem.windows.forms.DateTimePickerFormat.FormatLong;
+		dtpBeginDate.MinDate = elsystem.DateTime.Parse("1/1/2001");
+		dtpBeginDate.MaxDate = elsystem.DateTime.Parse("12/31/9998");
+		dtpBeginDate.ShowUpDown = false;
+		dtpBeginDate.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		dtpBeginDate.Width = 200;
+		dtpBeginDate.Height = 20;
+		dtpBeginDate.Dock = elsystem.windows.forms.DockStyle.None;
+		dtpBeginDate.Visible = true;
+		dtpBeginDate.Enabled = true;
+		dtpBeginDate.BackColor = elsystem.drawing.SystemColors.Control;
+		dtpBeginDate.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		dtpBeginDate.Margin = new elsystem.windows.forms.Padding( 3, 3, 3, 3 );
+		dtpBeginDate.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		dtpBeginDate.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 8.25, 0);
+		dtpBeginDate.ControlLocation.X = 147;
+		dtpBeginDate.ControlLocation.Y = 84;
+		dtpBeginDate.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		dtpBeginDate.AutoSize = false;
+		dtpBeginDate.UseWaitCursor = false;
+		dtpBeginDate.UseTheme = elsystem.windows.forms.UseThemeMode.Full;
+		dtpBeginDate.TabStop = true;
+		dtpBeginDate.TabIndex = 5;
+		dtpBeginDate.Name = "dtpBeginDate";
+		
+		//---------------------------
+		//lblexportpath
+		//---------------------------
+		lblExportPath.FlatStyle = elsystem.windows.forms.FlatStyle.Standard;
+		lblExportPath.TextAlign = elsystem.windows.forms.ContentAlignment.BottomRight;
+		lblExportPath.UseCompatibleTextRendering = true;
+		lblExportPath.AutoEllipsis = false;
+		lblExportPath.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		lblExportPath.Text = "Export Path :";
+		lblExportPath.Width = 113;
+		lblExportPath.Height = 23;
+		lblExportPath.Dock = elsystem.windows.forms.DockStyle.None;
+		lblExportPath.Visible = true;
+		lblExportPath.Enabled = true;
+		lblExportPath.BackColor = elsystem.drawing.SystemColors.Control;
+		lblExportPath.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		lblExportPath.Margin = new elsystem.windows.forms.Padding( 3, 0, 3, 0 );
+		lblExportPath.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		lblExportPath.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 8.25, 1);
+		lblExportPath.ControlLocation.X = 28;
+		lblExportPath.ControlLocation.Y = 207;
+		lblExportPath.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		lblExportPath.AutoSize = false;
+		lblExportPath.UseWaitCursor = false;
+		lblExportPath.UseTheme = elsystem.windows.forms.UseThemeMode.Full;
+		lblExportPath.TabStop = false;
+		lblExportPath.TabIndex = 4;
+		lblExportPath.Name = "lblExportPath";
+		
+		//---------------------------
+		//lblsymbolspath
+		//---------------------------
+		lblSymbolsPath.FlatStyle = elsystem.windows.forms.FlatStyle.Standard;
+		lblSymbolsPath.TextAlign = elsystem.windows.forms.ContentAlignment.BottomRight;
+		lblSymbolsPath.UseCompatibleTextRendering = true;
+		lblSymbolsPath.AutoEllipsis = false;
+		lblSymbolsPath.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		lblSymbolsPath.Text = "Symbols Path :";
+		lblSymbolsPath.Width = 129;
+		lblSymbolsPath.Height = 23;
+		lblSymbolsPath.Dock = elsystem.windows.forms.DockStyle.None;
+		lblSymbolsPath.Visible = true;
+		lblSymbolsPath.Enabled = true;
+		lblSymbolsPath.BackColor = elsystem.drawing.SystemColors.Control;
+		lblSymbolsPath.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		lblSymbolsPath.Margin = new elsystem.windows.forms.Padding( 3, 0, 3, 0 );
+		lblSymbolsPath.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		lblSymbolsPath.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 8.25, 1);
+		lblSymbolsPath.ControlLocation.X = 12;
+		lblSymbolsPath.ControlLocation.Y = 167;
+		lblSymbolsPath.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		lblSymbolsPath.AutoSize = false;
+		lblSymbolsPath.UseWaitCursor = false;
+		lblSymbolsPath.UseTheme = elsystem.windows.forms.UseThemeMode.Full;
+		lblSymbolsPath.TabStop = false;
+		lblSymbolsPath.TabIndex = 3;
+		lblSymbolsPath.Name = "lblSymbolsPath";
+		
+		//---------------------------
+		//txtexportpath
+		//---------------------------
+		txtExportPath.Multiline = false;
+		txtExportPath.BorderStyle = elsystem.windows.forms.BorderStyle.Fixed3D;
+		txtExportPath.ReadOnly = false;
+		txtExportPath.MaxLength = 32767;
+		txtExportPath.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		txtExportPath.Width = 300;
+		txtExportPath.Height = 20;
+		txtExportPath.Dock = elsystem.windows.forms.DockStyle.None;
+		txtExportPath.Visible = true;
+		txtExportPath.Enabled = true;
+		txtExportPath.BackColor = elsystem.drawing.SystemColors.Control;
+		txtExportPath.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		txtExportPath.Margin = new elsystem.windows.forms.Padding( 3, 3, 3, 3 );
+		txtExportPath.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		txtExportPath.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 8.25, 0);
+		txtExportPath.ControlLocation.X = 147;
+		txtExportPath.ControlLocation.Y = 213;
+		txtExportPath.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		txtExportPath.AutoSize = true;
+		txtExportPath.UseWaitCursor = false;
+		txtExportPath.UseTheme = elsystem.windows.forms.UseThemeMode.Full;
+		txtExportPath.TabStop = true;
+		txtExportPath.TabIndex = 2;
+		txtExportPath.Name = "txtExportPath";
+		
+		//---------------------------
+		//txtsymbolspath
+		//---------------------------
+		txtSymbolsPath.Multiline = false;
+		txtSymbolsPath.BorderStyle = elsystem.windows.forms.BorderStyle.Fixed3D;
+		txtSymbolsPath.ReadOnly = false;
+		txtSymbolsPath.MaxLength = 32767;
+		txtSymbolsPath.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		txtSymbolsPath.Width = 300;
+		txtSymbolsPath.Height = 20;
+		txtSymbolsPath.Dock = elsystem.windows.forms.DockStyle.None;
+		txtSymbolsPath.Visible = true;
+		txtSymbolsPath.Enabled = true;
+		txtSymbolsPath.BackColor = elsystem.drawing.SystemColors.Control;
+		txtSymbolsPath.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		txtSymbolsPath.Margin = new elsystem.windows.forms.Padding( 3, 3, 3, 3 );
+		txtSymbolsPath.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		txtSymbolsPath.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 8.25, 0);
+		txtSymbolsPath.ControlLocation.X = 147;
+		txtSymbolsPath.ControlLocation.Y = 170;
+		txtSymbolsPath.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		txtSymbolsPath.AutoSize = true;
+		txtSymbolsPath.UseWaitCursor = false;
+		txtSymbolsPath.UseTheme = elsystem.windows.forms.UseThemeMode.Full;
+		txtSymbolsPath.TabStop = true;
+		txtSymbolsPath.TabIndex = 1;
+		txtSymbolsPath.Name = "txtSymbolsPath";
+		
+		//---------------------------
+		//cmbinterval
+		//---------------------------
+		cmbInterval.FlatStyle = elsystem.windows.forms.FlatStyle.Standard;
+		cmbInterval.DropDownStyle = elsystem.windows.forms.ComboBoxStyle.DropDown;
+		cmbInterval.Sorted = false;
+		cmbInterval.DropDownWidth = 121;
+		cmbInterval.DropDownHeight = 106;
+		cmbInterval.RightToLeft = elsystem.windows.forms.RightToLeft.No;
+		cmbInterval.Text = "l";
+		cmbInterval.Width = 121;
+		cmbInterval.Height = 21;
+		cmbInterval.Dock = elsystem.windows.forms.DockStyle.None;
+		cmbInterval.Visible = true;
+		cmbInterval.Enabled = true;
+		cmbInterval.BackColor = elsystem.drawing.SystemColors.Control;
+		cmbInterval.ForeColor = elsystem.drawing.SystemColors.ControlText;
+		cmbInterval.Margin = new elsystem.windows.forms.Padding( 3, 3, 3, 3 );
+		cmbInterval.Padding = new elsystem.windows.forms.Padding( 0, 0, 0, 0 );
+		cmbInterval.Font = elsystem.drawing.Font.Create("Microsoft Sans Serif", 8.25, 0);
+		cmbInterval.ControlLocation.X = 147;
+		cmbInterval.ControlLocation.Y = 41;
+		cmbInterval.Anchor = elsystem.windows.forms.AnchorStyles.TopLeft;
+		cmbInterval.AutoSize = false;
+		cmbInterval.UseWaitCursor = false;
+		cmbInterval.UseTheme = elsystem.windows.forms.UseThemeMode.Full;
+		cmbInterval.TabStop = true;
+		cmbInterval.TabIndex = 0;
+		cmbInterval.Name = "cmbInterval";
+		
+		//---------------------------
+		//analysistechnique
+		//---------------------------
+		
+		//--------------------------------------------
+		//                  Events
+		//--------------------------------------------
+		btnShowExportPathDialog.click += btnshowexportpathdialog_click;
+		btnShowSymbolsPathDialog.click += btnshowsymbolspathdialog_click;
+		btnExport.click += btnExport_Click;
+		
+		//---------------------------
+		//analysistechnique
+		//---------------------------
+		
+		//--------------------------------------------
+		//                  Events
+		//--------------------------------------------
+		self.initialized += analysistechnique_initialized;
+end;
