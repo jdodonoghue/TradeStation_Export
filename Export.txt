@@ -27,27 +27,30 @@ Begin
 
 	Initialize();
 	frmExport.Show();
-
+	//print("AnalysisTechnique_Initialized");
+	
 End;
 
 method void Initialize()
 begin 
-	symbolListFilePath = "C:\_code\temp\Symbols_2.txt";
-	outputFilePath = "C:\_code\tradestation\data\IndividualContractsWeekly\";
-	firstDate = 1180101;
-	lastDate = 1190101;
+	symbolListFilePath = "C:\_code\tradestation\data\symbollist\Symbols_1.txt";
+	outputFilePath = "C:\_code\tradestation\data\WeeklyContinuous\";
+	firstDate = 1090101;
+	lastDate = 12011101;
 	
 	cmbInterval.AddItem("Daily");
 	cmbInterval.AddItem("Weekly");
 	
 	//interval = "Daily"; //"Daily", 0, "Weekly", 1
-	cmbInterval.SelectedIndex = 0;
+	cmbInterval.SelectedIndex = 1;
 	
-	dtpBeginDate.Value = DateTime.Create(1190101);
+	dtpBeginDate.Value = DateTime.Create(firstDate);
 	dtpEndDate.Value = DateTime.Now;
 	
 	txtSymbolsPath.Text = symbolListFilePath;
 	txtExportPath.Text = outputFilePath;
+	
+	myVectorObj = new Vector();
 	
 end;
 
@@ -56,10 +59,9 @@ var: int cnt, string line, StreamReader myFile;
 begin
 	//print("btnExport_OnButtonClick");
 	myFile = StreamReader.Create(symbolListFilePath); 
-	
-	myVectorObj = new Vector();
-	
+	//myVectorObj.Clear();	
 	interval = cmbInterval.SelectedItem.ToString();
+	//print("interval" + interval);
 	
 	While (myFile.EndOfStream = False)
 	Begin
@@ -135,16 +137,17 @@ end;
 method void ProcessData() 
 var: int cnt;
 begin 
+	interval = cmbInterval.SelectedItem.ToString();
 	for cnt = pcp1.Count - 1 downto 0 
 	begin 
 		//Print(pcp1.Symbol, ",", pcp1.Data.Time[cnt].ToString(), ",", pcp1.Open[cnt], ",", pcp1.High[cnt], ",", pcp1.Low[cnt], ",", pcp1.Close[cnt]);
-		FileAppend(outputFilePath + pcp1.Symbol + "_" + "Weekly" + ".csv", pcp1.Symbol + "," +  pcp1.Data.Time[cnt].ToString() + "," + pcp1.Open[cnt].ToString() + "," + pcp1.High[cnt].ToString() + "," + pcp1.Low[cnt].ToString() + "," + pcp1.Close[cnt].ToString() + Newline);
+		FileAppend(outputFilePath + pcp1.Symbol + "_" + interval + ".csv", pcp1.Symbol + "," +  pcp1.Data.Time[cnt].ToString() + "," + pcp1.Open[cnt].ToString() + "," + pcp1.High[cnt].ToString() + "," + pcp1.Low[cnt].ToString() + "," + pcp1.Close[cnt].ToString() + Newline);
 	end;  
 end; 
 
 method void pcp1_Updated ( elsystem.Object sender, tsdata.marketdata.PriceSeriesUpdatedEventArgs args )
 Begin
-  print("pcp1_Updated");
+  //print("pcp1_Updated");
 end;
 
 method void SetupTimer()	
@@ -173,7 +176,7 @@ begin
 	If icnt = myVectorObj.Count Then
 	Begin
 		Timer1.Stop();
-		print("completed"); 
+		//print("completed"); 
 	end;
 end;
 
@@ -212,14 +215,14 @@ end;
 
 method void dlgExportFile_OnFileOkClick( elsystem.Object sender, elsystem.EventArgs args ) 
 Begin
-	Print(dlgExportFile.FileName);
-	Print(dlgExportFile.SafeFileName);
+	//Print(dlgExportFile.FileName);
+	//Print(dlgExportFile.SafeFileName);
 	txtExportPath.Text = dlgExportFile.FileName;
 end;
 
 method void btnShowSymbolsPathDialog_Click( elsystem.Object sender, elsystem.EventArgs args ) 
 begin
-	Print("btnShowSymbolsPathDialog_Click");
+	//Print("btnShowSymbolsPathDialog_Click");
 	dlgSymbolsFile = OpenFileDialog.Create();
 	dlgSymbolsFile.InitialDirectory = "C:\_code\temp\";
 	dlgSymbolsFile.Filter = "txt files (*.txt)|*.txt";
@@ -231,7 +234,7 @@ end;
 
 method void btnShowExportPathDialog_Click( elsystem.Object sender, elsystem.EventArgs args ) 
 begin
-	Print("btnShowExportPathDialog_Click");
+	//Print("btnShowExportPathDialog_Click");
 	dlgExportFile = OpenFileDialog.Create();
 	dlgExportFile.InitialDirectory = "C:\_code\tradestation\data\";
 	dlgExportFile.ValidateNames = false;
@@ -240,5 +243,12 @@ begin
 	dlgExportFile.Filter = "txt files (*.txt)|*.txt";
 	dlgExportFile.FileOk += dlgExportFile_OnFileOkClick;
 	dlgExportFile.Show();
+end;
+
+
+
+method void AnalysisTechnique_UnInitialized( elsystem.Object sender, elsystem.UnInitializedEventArgs args ) 
+begin
+	//Print("AnalysisTechnique_UnInitialized");
 end;
 
